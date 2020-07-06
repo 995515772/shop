@@ -39,7 +39,7 @@ export default {
 	},
 	methods: {
 		async getData() {
-			const res = await this.axios.get(`getShop/?shop=${1}`);
+			const res = await this.axios.get(`getShop/?shop=${1}&user=${this.token}`);
 			if (this.code(res, false)) {
 				this.list = res.data.data;
 			}
@@ -53,13 +53,14 @@ export default {
 				cancelButtonText: '取消',
 				type: 'warning'
 			}).catch(err => err);
-			if(type == "cancel"){
-				return this.$message.info("取消购买")
-			}
-			let money = this.setMoney(this.money, data.jia);
-			const res = await this.axios.get(`setGoumai/?id=${data.id}&user=${this.token}&money=${money}`);
+			if(type == "cancel") return this.$message.info("取消购买")
+			
+			let options = {id:data.id,user:this.token,users:data.user,jia:data.jia,money:this.setMoney(this.money, data.jia)}
+			
+			const res = await this.axios.post(`setGoumai`,this.qs.stringify(options));
 			if (this.code(res)) {
 				this.getData();
+				this.setMoney()
 			}
 		},
 		setMoney(money, jia) {

@@ -25,10 +25,19 @@ import './static/css/common.css';
 import code from './components/common/code/index.js'
 // 使用封装的组件
 Vue.prototype.code = code;
-if(window.sessionStorage.getItem('token') && window.sessionStorage.getItem('money')){
+if(window.sessionStorage.getItem('token')){
 	Vue.prototype.token = window.sessionStorage.getItem('token')
-	Vue.prototype.money = window.sessionStorage.getItem('money')
+	getMoney()
 }
+Vue.prototype.getMoney = getMoney
+async function getMoney (){
+	const res = await axios.get(`setMoney/?user=${window.sessionStorage.getItem('token')}`)
+	window.sessionStorage.setItem('money',res.data.data[0].money)
+}
+
+
+
+
 Vue.filter('type',function(type){
 	const typeList = ['美味零食', '日常用品', '电子数码', '服装美妆', '其他商品'];
 	return typeList[type - 1];

@@ -73,7 +73,7 @@ export default {
 		},
 		// 用户点击退出登录
 		tuichu() {
-			window.localStorage.clear();
+			window.sessionStorage.clear();
 			this.$router.push('/login');
 		},
 		// 保存链接的激活状态

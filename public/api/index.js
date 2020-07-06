@@ -92,7 +92,7 @@ app.get('/getShop',(req,res) => {
 		if(err){
 			res.send({status:500,msg:'调用数据库接口失败'})
 		}else {
-			con.query(`select * from common where shop='${req.query.shop}'`,(err,data) => {
+			con.query(`select * from common where shop='${req.query.shop}' and user!='${req.query.user}'`,(err,data) => {
 				if(err) {
 					res.send({status:401,msg:'连接数据库失败'})
 				}else {
@@ -175,16 +175,45 @@ app.get('/setShop',(req,res) => {
 })
 
 // 购买商品接口
-app.get('/setGoumai',(req,res) => {
+app.post('/setGoumai',(req,res) => {
 	pool.getConnection((err,con) => {
 		if(err) {
 			res.send({status:500,msg:'调用数据库接口失败'})
 		}else {
-			con.query(`UPDATE common SET shop='${0}',user='${req.query.user}' where id=${req.query.id};UPDATE user SET money='${req.query.money}' where user='${req.query.user}'`,(err,data) => {
+			con.query(`select * from user where user='${req.body.users}'`,(err,data) => {
+				if(err) {
+					res.send({status:401,msg:'连接数据库失败1'})
+				}else {
+					let moneys = parseInt(data[0].money) + parseInt(req.body.jia)
+					con.query(`UPDATE common SET shop='${0}',user='${req.body.user}' where id=${req.body.id};
+					UPDATE user SET money='${req.body.money}' where user='${req.body.user}';
+					UPDATE user SET money='${moneys}' where user='${req.body.users}';
+					`,(err,data) => {
+						if(err) {
+							res.send({status:401,msg:'连接数据库失败'})
+						}else {
+							res.send({status:200,msg:'购买商品成功',data:data})
+						}
+					})
+				}
+				
+			})
+			con.end()
+		}
+	})
+})
+
+
+app.get('/setMoney',(req,res) => {
+	pool.getConnection((err,con) => {
+		if(err) {
+			res.send({status:500,msg:'调用数据库接口失败'})
+		}else {
+			con.query(`select * from user where user='${req.query.user}'`,(err,data) => {
 				if(err) {
 					res.send({status:401,msg:'连接数据库失败'})
 				}else {
-					res.send({status:200,msg:'购买商品成功',data:data})
+					res.send({status:200,msg:'获取价格信息成功',data:data})
 				}
 			})
 			con.end()
