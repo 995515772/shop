@@ -1,0 +1,67 @@
+import Vue from 'vue'
+import { 
+	Button,
+	Aside,
+	Container,
+	Header,
+	Main,
+	Footer,
+	Menu,
+	Submenu,
+	MenuItemGroup,
+	MenuItem,
+	Message,
+	FormItem,
+	Input,
+	Form,
+	Dialog,
+	Upload,
+	Card,
+	BreadcrumbItem,
+	Breadcrumb,
+	TabPane,
+	Tabs,
+	RadioGroup,
+	Radio,
+	Table,
+	TableColumn,
+	Col,
+	Row,
+	Tooltip,
+	Tag,
+	Switch,
+	Popconfirm,
+	MessageBox 
+ } from 'element-ui'
+Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.use(FormItem)
+Vue.use(Popconfirm)
+Vue.use(Tag)
+Vue.use(Switch)
+Vue.use(Tooltip)
+Vue.use(Col)
+Vue.use(Row)
+Vue.use(RadioGroup)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Radio)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(BreadcrumbItem)
+Vue.use(Breadcrumb)
+Vue.use(Card)
+Vue.use(Dialog)
+Vue.use(Upload)
+Vue.use(Input)
+Vue.use(Form)
+Vue.use(Button)
+Vue.use(Aside)
+Vue.use(Header)
+Vue.use(Container)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Menu)
+Vue.use(Submenu)
+Vue.use(MenuItemGroup)
+Vue.use(MenuItem)
